@@ -7,7 +7,8 @@ namespace xadrez_console
     {
         static void Main(string[] args)
         {
-            Board tabuleiro = new Board(20, 20);
+            Board tabuleiro = new Board(8, 8);
+            Screen.printBoard(tabuleiro);
         }
     }
 }
