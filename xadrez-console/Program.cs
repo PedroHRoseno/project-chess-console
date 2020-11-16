@@ -1,5 +1,6 @@
 ﻿using System;
 using board;
+using chess;
 
 namespace xadrez_console
 {
@@ -7,8 +8,20 @@ namespace xadrez_console
     {
         static void Main(string[] args)
         {
-            Board tabuleiro = new Board(8, 8);
-            Screen.printBoard(tabuleiro);
+            ChessMatch match = new ChessMatch();
+            Screen.printBoard(match.MyBoard);
+            while (!match.MatchEnded)
+            {
+                Console.Clear();
+                Screen.printBoard(match.MyBoard);
+                Console.WriteLine();
+                Console.Write("Origem: ");
+                Position origin = Screen.ReadChessPosition().toPosition();
+                Console.Write("Destino: ");
+                Position destiny = Screen.ReadChessPosition().toPosition();
+
+                match.DoMovement(origin, destiny);
+            }
         }
     }
 }

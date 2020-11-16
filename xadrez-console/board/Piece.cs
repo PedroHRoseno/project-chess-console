@@ -11,12 +11,17 @@ namespace board
         public int QtMovements { get; set; }
         public Board Chessboard { get; set; }
 
-        public Piece (Position position, Color color, Board chessboard)
+        public Piece (Color color, Board chessboard)
         {
-            this.Position = position;
+            this.Position = null;
             this.Color = color;
             this.Chessboard = chessboard;
             this.QtMovements = 0;
+        }
+
+        public void increaseMovement()
+        {
+            QtMovements++;
         }
     }
 }

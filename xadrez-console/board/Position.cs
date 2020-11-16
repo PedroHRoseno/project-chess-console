@@ -13,9 +13,7 @@ namespace board
         {
             this.Row = row;
             this.Column = column;
-
         }
-
         public override string ToString()
         {
             return this.Row + "," + this.Column;
