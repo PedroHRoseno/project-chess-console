@@ -14,42 +14,72 @@ namespace xadrez_console
             {
                 Console.Write(8 - i + " ");
                 for (int j=0; j < board.Column; j++)
-                {
-                    if (board.piece(i, j) == null) {
-                        Console.Write(" - ");
-                    }
-                    else
-                    {
-                        Console.Write("[");
-                        printPiece(board.piece(i, j));
-                        Console.Write("]");
-                    }
-                    
+                {        
+                    printPiece(board.piece(i, j));                    
                 }
                 Console.WriteLine();
             }
             Console.WriteLine("   a  b  c  d  e  f  g  h");
+        }
+        public static void printBoard(Board board, bool[,] possibleMovements)
+        {
+            ConsoleColor originalBackground = Console.BackgroundColor;
+            ConsoleColor changedBackground = ConsoleColor.DarkYellow;
+
+            for (int i = 0; i < board.Row; i++)
+            {
+                Console.Write(8 - i + " ");
+                for (int j = 0; j < board.Column; j++)
+                {
+                    if (possibleMovements[i, j])
+                    {
+                        Console.BackgroundColor = changedBackground;
+                    }
+                    else
+                    {
+                        Console.BackgroundColor = originalBackground;
+                    }
+                    printPiece(board.piece(i, j));
+                    Console.BackgroundColor = originalBackground;
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine("   a  b  c  d  e  f  g  h");
+            Console.BackgroundColor = originalBackground;
         }
 
         public static ChessPosition ReadChessPosition()
         {
             string s = Console.ReadLine();
             char column = s[0];
-            int row = int.Parse(s[1] + "");
+            int row = int.Parse(s[1] + ""); 
             return new ChessPosition(column, row);
         }
         public static void printPiece(Piece piece)
         {
-            if (piece.Color == Color.Black)
+            if (piece == null)
             {
-                ConsoleColor actualColor = Console.ForegroundColor;
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write(piece);
-                Console.ForegroundColor = actualColor;
+                Console.Write(" - ");
             }
-            else
-            {
-                Console.Write(piece);
+            else { 
+                if (piece.Color == Color.Green)
+                {
+                    ConsoleColor actualColor = Console.ForegroundColor;
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write("[");
+                    Console.Write(piece);
+                    Console.Write("]");
+                    Console.ForegroundColor = actualColor;
+                }
+                else
+                {
+                    ConsoleColor actualColor = Console.ForegroundColor;
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("[");
+                    Console.Write(piece);
+                    Console.Write("]");
+                    Console.ForegroundColor = actualColor;
+                }
             }
         }
     }

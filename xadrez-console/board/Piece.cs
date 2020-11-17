@@ -4,7 +4,7 @@ using System.Text;
 
 namespace board
 {
-    class Piece
+    abstract class Piece
     {
         public Position Position { get; set; }
         public Color Color { get; protected set; }
@@ -18,10 +18,32 @@ namespace board
             this.Chessboard = chessboard;
             this.QtMovements = 0;
         }
-
         public void increaseMovement()
         {
             QtMovements++;
         }
+
+        public bool therePossibleMovements()
+        {
+            bool[,] matrix = possibleMovements();
+            foreach (bool i in matrix) 
+            {
+                if (i)
+                {
+                    return true;
+                }
+
+            }
+            return false;
+
+        }
+
+        public bool canMoveTo(Position pos)
+        {
+            return possibleMovements()[pos.Row, pos.Column];
+        }
+
+        public abstract bool[,] possibleMovements();
+
     }
 }

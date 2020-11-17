@@ -8,7 +8,7 @@ namespace board
     {
         public int Row { get; set; }
         public int Column { get; set; }
-        private Piece[,] pieces;
+        public Piece[,] pieces;
 
         public Board(int row, int column)
         {
