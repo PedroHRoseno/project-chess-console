@@ -14,11 +14,7 @@ namespace xadrez_console
             {
                 try { 
                     Console.Clear();
-                    Screen.printBoard(match.MyBoard);
-
-                    Console.WriteLine();
-                    Console.WriteLine("Turno: " + match.CurrentTurn);
-                    Console.WriteLine("Aguardando jogada: " + match.CurrentPlayer);
+                    Screen.showMatch(match);
 
                     Console.WriteLine();
                     Console.Write("Origem: ");

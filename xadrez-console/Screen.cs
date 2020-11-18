@@ -61,7 +61,8 @@ namespace xadrez_console
             {
                 Console.Write(" - ");
             }
-            else { 
+            else
+            {
                 if (piece.Color == Color.Green)
                 {
                     ConsoleColor actualColor = Console.ForegroundColor;
@@ -82,5 +83,44 @@ namespace xadrez_console
                 }
             }
         }
+
+        public static void showMatch(ChessMatch match)
+        {
+            printBoard(match.MyBoard);
+            Console.WriteLine();
+            printCapturedPieces(match);
+            Console.WriteLine();
+            Console.WriteLine("Turno: " + match.CurrentTurn);
+            Console.WriteLine("Aguardando jogada: " + match.CurrentPlayer);
+        }
+
+        public static void printCapturedPieces(ChessMatch match)
+        {
+            Console.WriteLine("Peças capturdas: ");
+            ConsoleColor temp = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("Verdes: ");
+            printSet(match.capturedPiecesMethod(Color.Green));
+            Console.ForegroundColor = temp;
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("Vermelhas: ");
+            printSet(match.capturedPiecesMethod(Color.Red));
+            Console.ForegroundColor = temp;
+            Console.WriteLine();
+
+        }
+
+        public static void printSet(HashSet<Piece> set)
+        {
+            Console.Write("{");
+            foreach(Piece x in set)
+            {
+                Console.Write(x + " ");
+            }
+            Console.Write("}");
+        }
+
+        
     }
 }

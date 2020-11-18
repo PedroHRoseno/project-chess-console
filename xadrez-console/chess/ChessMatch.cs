@@ -12,11 +12,16 @@ namespace chess
         public Color CurrentPlayer { get; private set; }
         public bool MatchEnded { get; set; }
 
+        private HashSet<Piece> GamePieces;
+        private HashSet<Piece> CapturedPieces;
+
         public ChessMatch()
         {
             this.MyBoard = new Board(8, 8);
             this.CurrentTurn = 1;
             this.CurrentPlayer = Color.Green;
+            this.GamePieces = new HashSet<Piece>();
+            this.CapturedPieces = new HashSet<Piece>();
             PlaceInBoard();
 
         }
@@ -25,9 +30,26 @@ namespace chess
         {
             Piece p = MyBoard.removePiece(origin);
             p.increaseMovement();
-            Piece CapturedPiece = MyBoard.removePiece(destiny);
+            Piece capturedPiece = MyBoard.removePiece(destiny);
             MyBoard.placePiece(p, destiny);
+            if (capturedPiece != null)
+            {
+                CapturedPieces.Add(capturedPiece);
+            }
 
+        }
+
+        public HashSet<Piece> capturedPiecesMethod(Color color)
+        {
+            HashSet<Piece> temp = new HashSet<Piece>();
+            foreach (Piece x in this.CapturedPieces)
+            {
+                if(x.Color == color)
+                {
+                    temp.Add(x);
+                }
+            }
+            return temp;
         }
 
         public void makeMove(Position origin, Position destiny)
@@ -75,13 +97,36 @@ namespace chess
             }
         }
 
+        public HashSet<Piece> piecesInGame(Color color)
+        {
+            HashSet<Piece> temp = new HashSet<Piece>();
+            foreach(Piece x in GamePieces)
+            {
+                if (x.Color == color)
+                {
+                    temp.Add(x);
+                }
+            }
+            temp.ExceptWith(capturedPiecesMethod(color));
+            return temp;
+        }
+
+
+        public void setNewPiece(char column, int row, Piece piece)
+        {
+            MyBoard.placePiece(piece, new ChessPosition(column, row).toPosition());
+            GamePieces.Add(piece);
+        }
+
         public void PlaceInBoard()
         {
-            MyBoard.placePiece(new Tower(Color.Green, this.MyBoard), new ChessPosition('c', 1).toPosition());
-            MyBoard.placePiece(new Tower(Color.Green, this.MyBoard), new ChessPosition('b', 1).toPosition());
-            MyBoard.placePiece(new Tower(Color.Green, this.MyBoard), new ChessPosition('d', 1).toPosition());
-            MyBoard.placePiece(new Tower(Color.Green, this.MyBoard), new ChessPosition('c', 2).toPosition());
-            MyBoard.placePiece(new Tower(Color.Red, this.MyBoard), new ChessPosition('c', 7).toPosition());
+            setNewPiece('c', 1, new Tower(Color.Green, MyBoard));
+            setNewPiece('c', 2, new Tower(Color.Green, MyBoard));
+            setNewPiece('d', 1, new Tower(Color.Green, MyBoard));
+            setNewPiece('e', 1, new Tower(Color.Green, MyBoard));
+            setNewPiece('c', 8, new Tower(Color.Red, MyBoard));
+            setNewPiece('d', 8, new King(Color.Red, MyBoard));
+
         }
     }
 }
