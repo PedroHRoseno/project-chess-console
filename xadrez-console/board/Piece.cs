@@ -22,6 +22,10 @@ namespace board
         {
             QtMovements++;
         }
+        public void decreaseMovement()
+        {
+            this.QtMovements--;
+        } 
 
         public bool therePossibleMovements()
         {

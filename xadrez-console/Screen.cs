@@ -9,7 +9,7 @@ namespace xadrez_console
     class Screen
     {
         public static void printBoard(Board board)
-        {
+        { 
             for (int i=0; i < board.Row; i++)
             {
                 Console.Write(8 - i + " ");
@@ -91,7 +91,20 @@ namespace xadrez_console
             printCapturedPieces(match);
             Console.WriteLine();
             Console.WriteLine("Turno: " + match.CurrentTurn);
-            Console.WriteLine("Aguardando jogada: " + match.CurrentPlayer);
+            
+            if (!match.MatchEnded) 
+            {
+                Console.WriteLine("Aguardando jogada: " + match.CurrentPlayer);
+                if (match.Check)
+                {
+                    Console.WriteLine("Xeque!");
+                }
+            }
+            else
+            {
+                Console.WriteLine("-----XEQUEMATE---");
+                Console.WriteLine("O vencedor foi: " + match.CurrentPlayer);
+            }
         }
 
         public static void printCapturedPieces(ChessMatch match)
@@ -99,7 +112,7 @@ namespace xadrez_console
             Console.WriteLine("Peças capturdas: ");
             ConsoleColor temp = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write("Verdes: ");
+            Console.Write("Verdes: ");  
             printSet(match.capturedPiecesMethod(Color.Green));
             Console.ForegroundColor = temp;
             Console.WriteLine();
