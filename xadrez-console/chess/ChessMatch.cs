@@ -236,11 +236,41 @@ namespace chess
 
         public void PlaceInBoard()
         {
-            setNewPiece('c', 1, new Tower(Color.Green, MyBoard));
-            setNewPiece('d', 1, new King(Color.Green, MyBoard));
-            setNewPiece('h', 7, new Tower(Color.Green, MyBoard));
-            setNewPiece('a', 8, new King(Color.Red, MyBoard));
-            setNewPiece('b', 8, new Tower(Color.Red, MyBoard));
+            //Green
+            setNewPiece('a', 1, new Tower(Color.Green, MyBoard));
+            setNewPiece('b', 1, new Horse(Color.Green, MyBoard));
+            setNewPiece('c', 1, new Bishop(Color.Green, MyBoard));
+            setNewPiece('d', 1, new Queen(Color.Green, MyBoard));
+            setNewPiece('e', 1, new King(Color.Green, MyBoard));
+            setNewPiece('f', 1, new Bishop(Color.Green, MyBoard));
+            setNewPiece('g', 1, new Horse(Color.Green, MyBoard));
+            setNewPiece('h', 1, new Tower(Color.Green, MyBoard));
+            setNewPiece('a', 2, new Pawn(Color.Green, MyBoard));
+            setNewPiece('b', 2, new Pawn(Color.Green, MyBoard));
+            setNewPiece('c', 2, new Pawn(Color.Green, MyBoard));
+            setNewPiece('d', 2, new Pawn(Color.Green, MyBoard));
+            setNewPiece('e', 2, new Pawn(Color.Green, MyBoard));
+            setNewPiece('f', 2, new Pawn(Color.Green, MyBoard));
+            setNewPiece('g', 2, new Pawn(Color.Green, MyBoard));
+            setNewPiece('h', 2, new Pawn(Color.Green, MyBoard));
+
+            //Red
+            setNewPiece('a', 8, new Tower(Color.Red, MyBoard));
+            setNewPiece('b', 8, new Horse(Color.Red, MyBoard));
+            setNewPiece('c', 8, new Bishop(Color.Red, MyBoard));
+            setNewPiece('d', 8, new Queen(Color.Red, MyBoard));
+            setNewPiece('e', 8, new King(Color.Red, MyBoard));
+            setNewPiece('f', 8, new Bishop(Color.Red, MyBoard));
+            setNewPiece('g', 8, new Horse(Color.Red, MyBoard));
+            setNewPiece('h', 8, new Tower(Color.Red, MyBoard));
+            setNewPiece('a', 7, new Pawn(Color.Red, MyBoard));
+            setNewPiece('b', 7, new Pawn(Color.Red, MyBoard));
+            setNewPiece('c', 7, new Pawn(Color.Red, MyBoard));
+            setNewPiece('d', 7, new Pawn(Color.Red, MyBoard));
+            setNewPiece('e', 7, new Pawn(Color.Red, MyBoard));
+            setNewPiece('f', 7, new Pawn(Color.Red, MyBoard));
+            setNewPiece('g', 7, new Pawn(Color.Red, MyBoard));
+            setNewPiece('h', 7, new Pawn(Color.Red, MyBoard));
 
         }
     }
