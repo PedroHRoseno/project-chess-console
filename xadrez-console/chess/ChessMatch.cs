@@ -151,6 +151,20 @@ namespace chess
                 eraseMovement(origin, destiny, capturedPiece);
                 throw new boardException("Você não pode se colocar em cheque!");
             }
+            Piece p1 = MyBoard.piece(destiny);
+            //Special move - promotion
+            if (p1 is Pawn)
+            {
+                if (p1.Color == Color.Green && destiny.Row == 0 || (p1.Color == Color.Red && destiny.Row == 7))
+                {
+                    p1 = MyBoard.removePiece(destiny);
+                    GamePieces.Remove(p1);
+                    Piece queen = new Queen(p1.Color, MyBoard);
+                    MyBoard.placePiece(queen, destiny);
+                    GamePieces.Add(queen);
+                }
+            }
+
             if (isOnCheck(enemy(CurrentPlayer)))
             {
                 Check = true;
