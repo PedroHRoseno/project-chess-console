@@ -17,6 +17,8 @@ namespace chess
 
         public bool Check { get; private set; }
 
+        public Piece dangerEnPassant { get; private set; }
+
         public ChessMatch()
         {
             this.MyBoard = new Board(8, 8);
@@ -25,6 +27,7 @@ namespace chess
             this.CurrentPlayer = Color.Green;
             this.GamePieces = new HashSet<Piece>();
             this.CapturedPieces = new HashSet<Piece>();
+            dangerEnPassant = null;
             PlaceInBoard();
 
         }
@@ -103,6 +106,25 @@ namespace chess
                 MyBoard.placePiece(t, destinyTower);
             }
 
+            //Special move - En Passant
+            if (p is Pawn)
+            {
+                if (origin.Column != destiny.Column && capturedPiece == null)
+                {
+                    Position posP;
+                    if (p.Color == Color.Green)
+                    {
+                        posP = new Position(destiny.Row + 1, destiny.Column);
+                    }
+                    else
+                    {
+                        posP = new Position(destiny.Row - 1, destiny.Column);
+                    }
+                    capturedPiece = MyBoard.removePiece(posP);
+                    CapturedPieces.Add(capturedPiece);
+                }
+            }
+
             return capturedPiece;
 
         }
@@ -147,6 +169,14 @@ namespace chess
                 changePlayer();
             }
 
+            Piece p = MyBoard.piece(destiny);
+            // Special move - En passant
+
+            if (p is Pawn && (destiny.Row == origin.Row -2 || destiny.Row == origin.Row + 2))
+            {
+                dangerEnPassant = p;
+            }
+
 
         }
 
@@ -178,6 +208,25 @@ namespace chess
                 t.increaseMovement();
                 MyBoard.placePiece(t, originTower);
             }
+            //Special move - En Passant
+            if (p is Pawn)
+            {
+                if (origin.Column != destiny.Column && capturedPiece == dangerEnPassant)
+                {
+                    Piece pawn = MyBoard.removePiece(destiny);
+                    Position posP;
+                    if (p.Color == Color.Green)
+                    {
+                        posP = new Position(3, destiny.Column);
+                    }
+                    else
+                    {
+                        posP = new Position(4, destiny.Column);
+                    }
+                    MyBoard.placePiece(pawn, posP);
+                }
+            }
+
         }
 
         public bool checkTest(Color color)
@@ -282,14 +331,14 @@ namespace chess
             setNewPiece('f', 1, new Bishop(Color.Green, MyBoard));
             setNewPiece('g', 1, new Horse(Color.Green, MyBoard));
             setNewPiece('h', 1, new Tower(Color.Green, MyBoard));
-            setNewPiece('a', 2, new Pawn(Color.Green, MyBoard));
-            setNewPiece('b', 2, new Pawn(Color.Green, MyBoard));
-            setNewPiece('c', 2, new Pawn(Color.Green, MyBoard));
-            setNewPiece('d', 2, new Pawn(Color.Green, MyBoard));
-            setNewPiece('e', 2, new Pawn(Color.Green, MyBoard));
-            setNewPiece('f', 2, new Pawn(Color.Green, MyBoard));
-            setNewPiece('g', 2, new Pawn(Color.Green, MyBoard));
-            setNewPiece('h', 2, new Pawn(Color.Green, MyBoard));
+            setNewPiece('a', 2, new Pawn(Color.Green, MyBoard, this));
+            setNewPiece('b', 2, new Pawn(Color.Green, MyBoard,this));
+            setNewPiece('c', 2, new Pawn(Color.Green, MyBoard,this));
+            setNewPiece('d', 2, new Pawn(Color.Green, MyBoard,this));
+            setNewPiece('e', 2, new Pawn(Color.Green, MyBoard,this));
+            setNewPiece('f', 2, new Pawn(Color.Green, MyBoard,this));
+            setNewPiece('g', 2, new Pawn(Color.Green, MyBoard,this));
+            setNewPiece('h', 2, new Pawn(Color.Green, MyBoard,this));
 
             //Red
             setNewPiece('a', 8, new Tower(Color.Red, MyBoard));
@@ -300,14 +349,14 @@ namespace chess
             setNewPiece('f', 8, new Bishop(Color.Red, MyBoard));
             setNewPiece('g', 8, new Horse(Color.Red, MyBoard));
             setNewPiece('h', 8, new Tower(Color.Red, MyBoard));
-            setNewPiece('a', 7, new Pawn(Color.Red, MyBoard));
-            setNewPiece('b', 7, new Pawn(Color.Red, MyBoard));
-            setNewPiece('c', 7, new Pawn(Color.Red, MyBoard));
-            setNewPiece('d', 7, new Pawn(Color.Red, MyBoard));
-            setNewPiece('e', 7, new Pawn(Color.Red, MyBoard));
-            setNewPiece('f', 7, new Pawn(Color.Red, MyBoard));
-            setNewPiece('g', 7, new Pawn(Color.Red, MyBoard));
-            setNewPiece('h', 7, new Pawn(Color.Red, MyBoard));
+            setNewPiece('a', 7, new Pawn(Color.Red, MyBoard, this));
+            setNewPiece('b', 7, new Pawn(Color.Red, MyBoard, this));
+            setNewPiece('c', 7, new Pawn(Color.Red, MyBoard, this));
+            setNewPiece('d', 7, new Pawn(Color.Red, MyBoard, this));
+            setNewPiece('e', 7, new Pawn(Color.Red, MyBoard, this));
+            setNewPiece('f', 7, new Pawn(Color.Red, MyBoard, this));
+            setNewPiece('g', 7, new Pawn(Color.Red, MyBoard, this));
+            setNewPiece('h', 7, new Pawn(Color.Red, MyBoard, this));
 
         }
     }

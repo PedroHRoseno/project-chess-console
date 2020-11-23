@@ -7,9 +7,10 @@ namespace chess
 {
     class Pawn : Piece
     {
-        public Pawn(Color color, Board Chessboard) : base(color, Chessboard)
+        private ChessMatch chessMatchPawn;
+        public Pawn(Color color, Board Chessboard, ChessMatch chessmatchpawn) : base(color, Chessboard)
         {
-
+            this.chessMatchPawn = chessmatchpawn;
         }
 
         public override string ToString()
@@ -58,6 +59,21 @@ namespace chess
                 {
                     mat[pos.Row, pos.Column] = true;
                 }
+
+                //Special move - En Passant
+                if (Position.Row == 3)
+                {
+                    Position left = new Position(Position.Row, Position.Column - 1);
+                    if (Chessboard.validPosition(left) && thereEnemy(left) && Chessboard.piece(left) == chessMatchPawn.dangerEnPassant)
+                    {
+                        mat[left.Row - 1, left.Column] = true; 
+                    }
+                    Position right = new Position(Position.Row, Position.Column + 1);
+                    if (Chessboard.validPosition(right) && thereEnemy(right) && Chessboard.piece(right) == chessMatchPawn.dangerEnPassant)
+                    {
+                        mat[right.Row - 1, right.Column] = true;
+                    }
+                }
             }
             else
             {
@@ -83,6 +99,19 @@ namespace chess
                 if (Chessboard.validPosition(pos) && thereEnemy(pos))
                 {
                     mat[pos.Row, pos.Column] = true;
+                }
+                if (Position.Row == 4)
+                {
+                    Position left = new Position(Position.Row, Position.Column - 1);
+                    if (Chessboard.validPosition(left) && thereEnemy(left) && Chessboard.piece(left) == chessMatchPawn.dangerEnPassant)
+                    {
+                        mat[left.Row + 1, left.Column] = true;
+                    }
+                    Position right = new Position(Position.Row, Position.Column + 1);
+                    if (Chessboard.validPosition(right) && thereEnemy(right) && Chessboard.piece(right) == chessMatchPawn.dangerEnPassant)
+                    {
+                        mat[right.Row + 1, right.Column] = true;
+                    }
                 }
 
             }
