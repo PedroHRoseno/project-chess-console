@@ -36,25 +36,25 @@ namespace chess
             if (Color == Color.Green)
             {
                 pos.setValues(Position.Row - 1, Position.Column);
-                while (Chessboard.validPosition(pos) && free(pos))
+                if (Chessboard.validPosition(pos) && free(pos))
                 {
                     mat[pos.Row, pos.Column] = true;
                 }
             
                 pos.setValues(Position.Row - 2, Position.Column);
-                while (Chessboard.validPosition(pos) && free(pos) && QtMovements == 0)
+                if (Chessboard.validPosition(pos) && free(pos) && QtMovements == 0)
                 {
                     mat[pos.Row, pos.Column] = true;
                 }
             
                 pos.setValues(Position.Row - 1, Position.Column - 1);
-                while (Chessboard.validPosition(pos) && thereEnemy(pos))
+                if (Chessboard.validPosition(pos) && thereEnemy(pos))
                 {
                     mat[pos.Row, pos.Column] = true;
                 }
             
                 pos.setValues(Position.Row - 1, Position.Column + 1);
-                while (Chessboard.validPosition(pos) && thereEnemy(pos))
+                if (Chessboard.validPosition(pos) && thereEnemy(pos))
                 {
                     mat[pos.Row, pos.Column] = true;
                 }
@@ -62,25 +62,25 @@ namespace chess
             else
             {
                 pos.setValues(Position.Row + 1, Position.Column);
-                while (Chessboard.validPosition(pos) && free(pos))
+                if (Chessboard.validPosition(pos) && free(pos))
                 {
                     mat[pos.Row, pos.Column] = true;
                 }
 
                 pos.setValues(Position.Row + 2, Position.Column);
-                while (Chessboard.validPosition(pos) && free(pos) && QtMovements == 0)
+                if (Chessboard.validPosition(pos) && free(pos) && QtMovements == 0)
                 {
                     mat[pos.Row, pos.Column] = true;
                 }
 
                 pos.setValues(Position.Row + 1, Position.Column - 1);
-                while (Chessboard.validPosition(pos) && thereEnemy(pos))
+                if (Chessboard.validPosition(pos) && thereEnemy(pos))
                 {
                     mat[pos.Row, pos.Column] = true;
                 }
 
                 pos.setValues(Position.Row + 1, Position.Column + 1);
-                while (Chessboard.validPosition(pos) && thereEnemy(pos))
+                if (Chessboard.validPosition(pos) && thereEnemy(pos))
                 {
                     mat[pos.Row, pos.Column] = true;
                 }

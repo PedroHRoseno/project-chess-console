@@ -7,8 +7,10 @@ namespace chess
 {
     class King : Piece 
     {
-        public King (Color Color, Board Chessboard ) : base(Color, Chessboard)
+        private ChessMatch ChessmatchKing;
+        public King (Color Color, Board Chessboard, ChessMatch chessmatchKing ) : base(Color, Chessboard)
         {
+            this.ChessmatchKing = chessmatchKing;
 
         }
         public override string ToString()
@@ -21,6 +23,12 @@ namespace chess
         {
             Piece p = Chessboard.piece(pos);
             return p == null || p.Color != this.Color;
+        }
+
+        private bool testToCastling(Position pos)
+        {
+            Piece p = Chessboard.piece(pos);
+            return p != null && p is Tower && p.Color == Color && p.QtMovements == 0;
         }
         public override bool[,] possibleMovements()
         {
@@ -75,6 +83,38 @@ namespace chess
             {
                 possibilityMatrix[pos.Row, pos.Column] = true;
             }
+
+            // Special moves - Castling
+
+            if (QtMovements == 0 && !ChessmatchKing.Check)
+            {
+                // Little castling
+                Position towerPosition = new Position(Position.Row, Position.Column + 3);
+                if (testToCastling(towerPosition))
+                {
+                    Position p1 = new Position(Position.Row, Position.Column + 1);
+                    Position p2 = new Position(Position.Row, Position.Column + 2);
+                    if (Chessboard.piece(p1) == null && Chessboard.piece(p2) == null)
+                    {
+                        possibilityMatrix[Position.Row, Position.Column + 2] = true;
+                    }
+                }
+                // Big castling
+                Position towerPosition2 = new Position(Position.Row, Position.Column - 4);
+                if (testToCastling(towerPosition2))
+                {
+                    Position p1 = new Position(Position.Row, Position.Column - 1);
+                    Position p2 = new Position(Position.Row, Position.Column - 2);
+                    Position p3 = new Position(Position.Row, Position.Column - 3);
+                    if (Chessboard.piece(p1) == null && Chessboard.piece(p2) == null && Chessboard.piece(p2) == null)
+                    {
+                        possibilityMatrix[Position.Row, Position.Column - 2] = true;
+                    }
+                }
+            }   
+
+
+
             return possibilityMatrix;
         }
     }

@@ -84,6 +84,25 @@ namespace chess
             {
                 CapturedPieces.Add(capturedPiece);
             }
+
+            //Special movie castling
+            if (p is King && destiny.Column == origin.Column + 2)
+            {
+                Position originTower = new Position(origin.Row, origin.Column + 3);
+                Position destinyTower = new Position(origin.Row, origin.Column + 1);
+                Piece t = MyBoard.removePiece(originTower);
+                t.increaseMovement();
+                MyBoard.placePiece(t, destinyTower);
+            }
+            if (p is King && destiny.Column == origin.Column - 2)
+            {
+                Position originTower = new Position(origin.Row, origin.Column - 4);
+                Position destinyTower = new Position(origin.Row, origin.Column - 1);
+                Piece t = MyBoard.removePiece(originTower);
+                t.increaseMovement();
+                MyBoard.placePiece(t, destinyTower);
+            }
+
             return capturedPiece;
 
         }
@@ -141,6 +160,24 @@ namespace chess
                 CapturedPieces.Remove(capturedPiece);
             }
             MyBoard.placePiece(p, origin);
+
+            //Special movie castling
+            if (p is King && destiny.Column == origin.Column + 2)
+            {
+                Position originTower = new Position(origin.Row, origin.Column + 3);
+                Position destinyTower = new Position(origin.Row, origin.Column + 1);
+                Piece t = MyBoard.removePiece(destinyTower);
+                t.decreaseMovement();
+                MyBoard.placePiece(t, originTower);
+            }
+            if (p is King && destiny.Column == origin.Column - 2)
+            {
+                Position originTower = new Position(origin.Row, origin.Column - 4);
+                Position destinyTower = new Position(origin.Row, origin.Column - 1);
+                Piece t = MyBoard.removePiece(destinyTower);
+                t.increaseMovement();
+                MyBoard.placePiece(t, originTower);
+            }
         }
 
         public bool checkTest(Color color)
@@ -241,7 +278,7 @@ namespace chess
             setNewPiece('b', 1, new Horse(Color.Green, MyBoard));
             setNewPiece('c', 1, new Bishop(Color.Green, MyBoard));
             setNewPiece('d', 1, new Queen(Color.Green, MyBoard));
-            setNewPiece('e', 1, new King(Color.Green, MyBoard));
+            setNewPiece('e', 1, new King(Color.Green, MyBoard, this));
             setNewPiece('f', 1, new Bishop(Color.Green, MyBoard));
             setNewPiece('g', 1, new Horse(Color.Green, MyBoard));
             setNewPiece('h', 1, new Tower(Color.Green, MyBoard));
@@ -259,7 +296,7 @@ namespace chess
             setNewPiece('b', 8, new Horse(Color.Red, MyBoard));
             setNewPiece('c', 8, new Bishop(Color.Red, MyBoard));
             setNewPiece('d', 8, new Queen(Color.Red, MyBoard));
-            setNewPiece('e', 8, new King(Color.Red, MyBoard));
+            setNewPiece('e', 8, new King(Color.Red, MyBoard, this));
             setNewPiece('f', 8, new Bishop(Color.Red, MyBoard));
             setNewPiece('g', 8, new Horse(Color.Red, MyBoard));
             setNewPiece('h', 8, new Tower(Color.Red, MyBoard));
