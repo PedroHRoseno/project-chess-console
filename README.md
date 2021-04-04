@@ -1,3 +1,3 @@
 # project-chess-console
 
-Projeto de xadrez criado com o auxílio do Curso de C# - Orientado a Objetos do professor Nélio Alves.
+Chess game created with help of Curso de C# - Orientado a Objetos from teacher Nélio Alves.
